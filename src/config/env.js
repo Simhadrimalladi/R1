@@ -8,5 +8,5 @@ export const env = {
   MONGODB_URI: process.env.MONGODB_URI || 'mongodb+srv://Preproute:ramya123@cluster0.fxxkf4u.mongodb.net/preproute_test_management?retryWrites=true&w=majority&appName=Cluster0',
   JWT_SECRET: process.env.JWT_SECRET || 'production-super-secret-jwt-key-change-this',
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
-  CORS_ORIGIN: process.env.CORS_ORIGIN || 'https://preproute-frontend-drab.vercel.app'
+  CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5173,http://localhost:3000,https://r2f.vercel.app,https://r2-lp2wcm0tg-simhadrimalladis-projects.vercel.app,https://preproute-frontend-drab.vercel.app'
 };
