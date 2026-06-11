@@ -19,13 +19,26 @@ const app = express();
 // Security
 app.use(helmet({ contentSecurityPolicy: false }));
 
-// CORS - use configured origin and allow credentials
+// CORS - support comma-separated whitelist and allow credentials
+const allowedOrigins = (env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
+
 const corsOptions = {
-  origin: env.CORS_ORIGIN || '*',
+  origin: (incomingOrigin, callback) => {
+    // allow non-browser requests (e.g., curl, server-side)
+    if (!incomingOrigin) return callback(null, true);
+
+    // allow when no origins configured (development) or wildcard present
+    if (allowedOrigins.length === 0 || allowedOrigins.includes('*')) return callback(null, true);
+
+    if (allowedOrigins.includes(incomingOrigin)) return callback(null, true);
+
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+
 app.use(cors(corsOptions));
 
 app.use(express.json({ limit: '2mb' }));
