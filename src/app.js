@@ -25,6 +25,9 @@ app.use(helmet({ contentSecurityPolicy: false }));
 // CORS - support comma-separated whitelist and allow credentials
 const allowedOrigins = (env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
 
+// Log configured CORS origins for diagnostics
+console.log('Configured CORS origins:', allowedOrigins.length ? allowedOrigins : ['<none - allow all>']);
+
 const corsOptions = {
   origin: (incomingOrigin, callback) => {
     // allow non-browser requests (e.g., curl, server-side)
@@ -45,6 +48,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+// Ensure preflight requests return the correct CORS headers
+app.options('*', cors(corsOptions));
 
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
