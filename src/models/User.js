@@ -5,16 +5,16 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true, trim: true },
   passwordHash: { type: String, required: true },
   name: { type: String, required: true },
-  role: { type: String, enum: ['ADMIN', 'MODERATOR'], default: 'ADMIN' },
+  role: { type: String, enum: ['ADMIN', 'MODERATOR', 'admin', 'teacher', 'student'], default: 'ADMIN' },
   avatar: { type: String, default: '' },
   isActive: { type: Boolean, default: true }
 }, { timestamps: true });
 
-userSchema.methods.comparePassword = function comparePassword(password) {
+userSchema.methods.comparePassword = async function(password) {
   return bcrypt.compare(password, this.passwordHash);
 };
 
-userSchema.statics.hashPassword = function hashPassword(password) {
+userSchema.statics.hashPassword = async function(password) {
   return bcrypt.hash(password, 10);
 };
 
