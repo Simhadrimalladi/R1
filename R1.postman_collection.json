@@ -1,0 +1,333 @@
+{
+  "info": {
+    "name": "Preproute API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "API requests for Preproute backend. Import this collection into Postman and use the baseUrl variable."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Root Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"vedant-admin\",\n  \"password\": \"yourPasswordHere\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Current User (me)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/me",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "me"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/dashboard",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dashboard"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Lookup Subjects",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/lookups/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "lookups",
+            "subjects"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Subjects",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/subjects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "subjects"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Topics by Subject",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/topics/subject/:subjectId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "topics",
+            "subject",
+            ":subjectId"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Subtopics by Topic",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/sub-topics/topic/:topicId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sub-topics",
+            "topic",
+            ":topicId"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Subtopics by Multiple Topics",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"topicIds\": [\"topicId1\", \"topicId2\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/sub-topics/multi-topics",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sub-topics",
+            "multi-topics"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bulk Create Questions",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"questions\": [\n    {\n      \"questionText\": \"Example question?\",\n      \"options\": [\n        { \"text\": \"A\", \"isCorrect\": false },\n        { \"text\": \"B\", \"isCorrect\": true }\n      ],\n      \"difficulty\": \"EASY\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/questions/bulk",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "questions",
+            "bulk"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Fetch Bulk Questions",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"questionIds\": [\"questionId1\", \"questionId2\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/questions/fetchBulk",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "questions",
+            "fetchBulk"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Tests",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/tests",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tests"
+          ]
+        }
+      }
+    }
+  ]
+}
