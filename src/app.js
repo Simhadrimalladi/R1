@@ -16,6 +16,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
+// When running behind a proxy (Vercel, Heroku, etc.) enable trust proxy
+app.set('trust proxy', 1);
+
 // Security
 app.use(helmet({ contentSecurityPolicy: false }));
 
@@ -32,7 +35,9 @@ const corsOptions = {
 
     if (allowedOrigins.includes(incomingOrigin)) return callback(null, true);
 
-    return callback(new Error('Not allowed by CORS'));
+    // don't throw an error here (that becomes a 500). Return false so CORS simply blocks the origin.
+    console.warn(`Blocked CORS request from origin: ${incomingOrigin}`);
+    return callback(null, false);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
